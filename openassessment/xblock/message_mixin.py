@@ -145,7 +145,8 @@ class MessageMixin:
         submission_approaching = deadline_info.get("submission").get("approaching")
 
         context = {
-            "approaching": submission_approaching
+            "approaching": submission_approaching,
+            "show_info": len(deadline_info)
         }
 
         return 'openassessmentblock/message/oa_message_open.html', context
