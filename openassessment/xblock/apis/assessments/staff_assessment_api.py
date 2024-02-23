@@ -39,7 +39,7 @@ class StaffAssessmentAPI(StepDataAPI):
         )
 
     def create_team_assessment(self, data):
-        team_submission = team_sub_api.get_team_submission_from_individual_submission(
+        team_submission = team_sub_api.get_team_submission(
             data["submission_uuid"]
         )
         return (

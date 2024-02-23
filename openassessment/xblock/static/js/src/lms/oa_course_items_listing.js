@@ -22,10 +22,6 @@ export class CourseItemsListingView {
     const AssessmentCell = Backgrid.UriCell.extend({
       type: null,
       url: null,
-      // Should be removed as a part of AU-617
-      shouldShowLink() {
-        return true;
-      },
       render() {
         this.$el.empty();
         const name = this.column.get('name');
@@ -35,7 +31,7 @@ export class CourseItemsListingView {
         const formattedValue = this.formatter.fromRaw(rawValue, this.model);
         const hasAssessmentType = this.model.get(this.type ? this.type : 'staff_assessment');
         let link = null;
-        if (itemViewEnabled && (!this.type || (this.type && hasAssessmentType)) && this.shouldShowLink()) {
+        if (itemViewEnabled && (!this.type || (this.type && hasAssessmentType))) {
           link = $('<a>', {
             text: formattedValue,
             title: this.title || formattedValue,
@@ -61,18 +57,13 @@ export class CourseItemsListingView {
         const displayValue = esgEnabled ? gettext('View and grade responses') : gettext('Demo the new Grading Experience');
         const id = this.model.get('id');
         const url = `${esgRootUrl}/${id}`;
-        const hasAssessmentType = this.model.get('staff_assessment');
         const link = $('<a>', {
           text: displayValue,
           title: displayValue,
           href: url,
           class: 'staff-esg-link',
         });
-        // Remove this in AU-617
-        const teamAssignment = this.model.get('team_assignment');
-        if (hasAssessmentType && !teamAssignment) {
-          this.$el.append(link);
-        }
+        this.$el.append(link);
         return this;
       },
     });
@@ -85,10 +76,6 @@ export class CourseItemsListingView {
     const StaffCell = AssessmentCell.extend({
       url: 'url_grade_available_responses',
       type: 'staff_assessment',
-      // Should be removed as a part of AU-617
-      shouldShowLink() {
-        return this.model.get('team_assignment') || !esgEnabled;
-      },
     });
 
     this._columns = [
@@ -152,7 +139,7 @@ export class CourseItemsListingView {
         name: 'staff',
         label: gettext('Staff'),
         label_summary: gettext('Staff'),
-        cell: StaffCell,
+        cell: esgEnabled ? 'string' : StaffCell,
         num: true,
         editable: false,
       },

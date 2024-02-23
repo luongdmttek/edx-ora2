@@ -9,6 +9,7 @@ from openassessment.xblock.ui_mixins.legacy.peer_assessments.actions import peer
 from openassessment.xblock.ui_mixins.legacy.self_assessments.actions import self_assess
 from openassessment.xblock.ui_mixins.legacy.staff_assessments.actions import (
     do_staff_assessment,
+    do_team_staff_assessment,
     staff_assess,
 )
 from openassessment.xblock.ui_mixins.legacy.student_training.actions import training_assess
@@ -89,6 +90,9 @@ class LegacyHandlersMixin:
     def do_staff_assessment(self, data):
         return do_staff_assessment(self.api_data, data)
 
+    def do_team_staff_assessment(self, data, team_submission_uuid):
+        return do_team_staff_assessment(self.api_data, data, team_submission_uuid)
+    
     # Utils
 
     @XBlock.json_handler
