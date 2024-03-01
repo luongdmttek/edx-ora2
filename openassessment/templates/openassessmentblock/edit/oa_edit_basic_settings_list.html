@@ -162,4 +162,17 @@
             {% trans "Specify whether learners can see the rubric while they are working on their response." %}
         </p>
     </li>
+    <!-- Creating a learner max modify time -->
+    <li id="openassessment_modify_time_wrapper" class="field comp-setting-entry">
+        <div class="wrapper-comp-setting">
+            <label for="openassessment_modify_time" class="setting-label">{% trans "Assessment Retry Max Time" %}</label>
+
+            <label for="openassessment_retry_hours" style="margin-right: 10px;">{% trans "Hours" %}</label>
+            <input type="number" id="openassessment_retry_hours" class="input setting-input" min="0" value="{{ openassessment_retry_hours }}" style="width: 50px; max-width: 50px;">
+
+            <label for="openassessment_retry_minutes" style="margin-left: 20px; margin-right: 10px;">{% trans "Minutes" %}</label>
+            <input type="number" id="openassessment_retry_minutes" class="input setting-input" min="0" max="59" value="{{ openassessment_retry_minutes }}" style="width: 50px; max-width: 50px;">
+        </div>
+        <p class="setting-help">{% trans "Max time to retry an assessment." %}</p>
+    </li>
 </ul>

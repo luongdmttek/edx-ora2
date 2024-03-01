@@ -124,6 +124,8 @@ EDITOR_UPDATE_SCHEMA = Schema({
     Required('allow_multiple_files'): bool,
     Required('allow_latex'): bool,
     Required('leaderboard_show'): int,
+    Required('openassessment_retry_minutes'): int,
+    Required('openassessment_retry_hours'): int,
     Optional('teams_enabled'): bool,
     Optional('selected_teamset_id'): utf8_validator,
     Required('assessments'): [

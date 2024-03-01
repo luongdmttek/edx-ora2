@@ -381,6 +381,37 @@ export class Server {
   }
 
   /**
+   * Reset a student's assessment.
+   *
+   * @param {object} values_obj - Contains the student information, 
+   *     e.g. { userid: "12345" }
+   * @returns {promise} A promise which logs "Success" if successful,
+   *     and "Error" otherwise.
+   */
+  resetStudentAssessment(values_obj) {
+    const url = this.url('reset_student_assessment');
+    const payload = JSON.stringify({
+      user_id: values_obj.userid,
+    });
+    return $.Deferred((defer) => {
+      $.ajax({
+        type: 'POST',
+        url,
+        data: payload,
+        contentType: jsonContentType,
+      })
+      .done(function (data) {
+        const success = data;
+        if (success) {
+          defer.resolveWith(this);
+        }
+      }).fail(function () {
+        console.log("Error");
+      });
+    }).promise();
+  }
+
+  /**
    * Schedules classifier training for Example Based Assessments.
    *
    * @returns {promise} A JQuery promise, which resolves with a
@@ -471,6 +502,8 @@ export class Server {
       allow_multiple_files: options.multipleFilesEnabled,
       allow_latex: options.latexEnabled,
       leaderboard_show: options.leaderboardNum,
+      openassessment_retry_minutes: options.retryAssessmentMinsNum,
+      openassessment_retry_hours: options.retryAssessmentHoursNum,
       teams_enabled: options.teamsEnabled,
       selected_teamset_id: options.selectedTeamsetId,
       show_rubric_during_response: options.showRubricDuringResponse,

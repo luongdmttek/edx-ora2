@@ -25,7 +25,7 @@
     </header>
 
     {% if message_title %}
-    <div class="ui-slidable__content" aria-labelledby="oa_staff_grade_{{ xblock_id }}" id="oa_staff_grade_{{ xblock_id }}_content">
+    <div class="ui-slidable__content list--actions" aria-labelledby="oa_staff_grade_{{ xblock_id }}" id="oa_staff_grade_{{ xblock_id }}_content">
         <div class="wrapper--step__content">
             <div class="step__message message message--incomplete">
                 <h5 class="message__title">{{ message_title }}</h5>
@@ -35,7 +35,19 @@
                 </div>
             </div>
         </div>
+        {% if retry_assessment_enable %}
+            <button 
+            class="action action--submit staff-waiting__retry_assessment_button" 
+            data-userid="{{user_id}}">
+                {% trans "Reset your submission to be able to send it again" %}
+            </button>
+        {% else %}
+
+        {% endif %}
     </div>
+    <div class="staff-grade__dialog-confirm dialog-confirm">
+        <p class="dialog-text"></p>
+      </div>
     {% endif %}
 
 </li>

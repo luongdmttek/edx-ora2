@@ -331,6 +331,14 @@ msgid ""
 "response."
 msgstr ""
 
+#: templates/openassessmentblock/edit/oa_edit_basic_settings_list.html:162
+msgid "Assessment Retry Max Time"
+msgstr "Thời gian để trả lời lại câu hỏi"
+
+#: templates/openassessmentblock/edit/oa_edit_basic_settings_list.html:162
+msgid "Max time to retry an assessment."
+msgstr "Thời gian tối đa trả lời lại câu hỏi."
+
 #: templates/openassessmentblock/edit/oa_edit_criterion.html:6
 #: templates/openassessmentblock/staff_area/oa_student_info.html:122
 #: templates/openassessmentblock/staff_area/oa_student_info_assessment_detail.html:25
@@ -1692,6 +1700,18 @@ msgstr ""
 #: templates/openassessmentblock/staff/oa_staff_grade.html:13
 #: xblock/grade_mixin.py:365
 msgid "Staff Grade"
+msgstr ""
+
+#: templates/openassessmentblock/staff/oa_staff_grade.html:43
+msgid "Reset your submission to be able to send it again"
+msgstr ""
+
+#: openassessment/xblock/static/js/lms/oa_staff.js
+msgid "Confirm Reset Submission"
+msgstr ""
+
+#: openassessment/xblock/static/js/lms/oa_staff.js
+msgid "Are you want to reset your response for this assignment ?"
 msgstr ""
 
 #: templates/openassessmentblock/staff_area/oa_staff_area.html:8

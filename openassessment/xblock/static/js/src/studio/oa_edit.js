@@ -250,6 +250,8 @@ export class StudioView {
       multipleFilesEnabled: teamsEnabled ? true : this.settingsView.multipleFilesEnabled(),
       latexEnabled: this.settingsView.latexEnabled(),
       leaderboardNum: this.settingsView.leaderboardNum(),
+      retryAssessmentMinsNum:this.settingsView.retryAssessmentMinsNum(),
+      retryAssessmentHoursNum:this.settingsView.retryAssessmentHoursNum(),
       editorAssessmentsOrder: this.assessmentsStepsView.editorAssessmentsOrder(),
       teamsEnabled,
       selectedTeamsetId: this.settingsView.teamset(),

@@ -14,6 +14,8 @@ class ORAConfigAPI:
         "file_upload_type_raw",
         "has_saved",
         "leaderboard_show",
+        "openassessment_retry_minutes",
+        "openassessment_retry_hours",
         "prompt",
         "prompts_type",
         "rubric_criteria",

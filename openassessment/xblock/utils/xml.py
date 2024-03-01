@@ -715,6 +715,14 @@ def serialize_content_to_xml(oa_block, root):
     if oa_block.leaderboard_show:
         root.set('leaderboard_show', str(oa_block.leaderboard_show))
 
+    # Set openassessment_retry_minutes
+    if oa_block.openassessment_retry_minutes:
+        root.set('openassessment_retry_minutes', str(oa_block.openassessment_retry_minutes))
+
+    # Set openassessment_retry_hours
+    if oa_block.openassessment_retry_hours:
+        root.set('openassessment_retry_hours', str(oa_block.openassessment_retry_hours))
+
     # Set text response
     if oa_block.text_response:
         root.set('text_response', str(oa_block.text_response))
@@ -944,6 +952,22 @@ def parse_from_xml(root):
             leaderboard_show = int(root.attrib['leaderboard_show'])
         except (TypeError, ValueError) as ex:
             raise UpdateFromXmlError('The leaderboard must have an integer value.') from ex
+        
+    # Retrieve the openassessment_retry_minutes if it exists, otherwise set it to 0
+    openassessment_retry_minutes = 0
+    if 'openassessment_retry_minutes' in root.attrib:
+        try:
+            openassessment_retry_minutes = int(root.attrib['openassessment_retry_minutes'])
+        except (TypeError, ValueError) as ex:
+            raise UpdateFromXmlError('The openassessment_retry_minutes must have an integer value.') from ex
+        
+    # Retrieve the openassessment_retry_hours if it exists, otherwise set it to 0
+    openassessment_retry_hours = 0
+    if 'openassessment_retry_hours' in root.attrib:
+        try:
+            openassessment_retry_hours = int(root.attrib['openassessment_retry_hours'])
+        except (TypeError, ValueError) as ex:
+            raise UpdateFromXmlError('The openassessment_retry_hours must have an integer value.') from ex
 
     # Retrieve teams info
     teams_enabled = False
@@ -979,6 +1003,8 @@ def parse_from_xml(root):
         'allow_latex': allow_latex,
         'group_access': group_access,
         'leaderboard_show': leaderboard_show,
+        'openassessment_retry_minutes':openassessment_retry_minutes,
+        'openassessment_retry_hours':openassessment_retry_hours,
         'teams_enabled': teams_enabled,
         'selected_teamset_id': selected_teamset_id,
         'show_rubric_during_response': show_rubric_during_response,

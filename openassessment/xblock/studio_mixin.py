@@ -194,6 +194,8 @@ class StudioMixin:
             'white_listed_file_types': white_listed_file_types_string,
             'allow_latex': self.allow_latex,
             'leaderboard_show': self.leaderboard_show,
+            'openassessment_retry_minutes': self.openassessment_retry_minutes,
+            'openassessment_retry_hours': self.openassessment_retry_hours,
             'editor_assessments_order': [
                 make_django_template_key(asmnt)
                 for asmnt in self.editor_assessments_order
@@ -315,6 +317,8 @@ class StudioMixin:
         self.allow_multiple_files = bool(data['allow_multiple_files'])
         self.allow_latex = bool(data['allow_latex'])
         self.leaderboard_show = data['leaderboard_show']
+        self.openassessment_retry_minutes = data['openassessment_retry_minutes']
+        self.openassessment_retry_hours = data['openassessment_retry_hours']
         self.teams_enabled = bool(data.get('teams_enabled', False))
         self.selected_teamset_id = data.get('selected_teamset_id', '')
         self.show_rubric_during_response = data.get('show_rubric_during_response', False)

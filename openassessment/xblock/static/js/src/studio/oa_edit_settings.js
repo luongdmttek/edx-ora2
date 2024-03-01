@@ -42,6 +42,9 @@ export class EditSettingsView {
     this.setHidden = this.setHidden.bind(this);
     this.teamset = this.teamset.bind(this);
     this.leaderboardNum = this.leaderboardNum.bind(this);
+    this.retryAssessmentMinsNum = this.retryAssessmentMinsNum.bind(this);
+    this.retryAssessmentHoursNum = this.retryAssessmentHoursNum.bind(this);
+
     this.validate = this.validate.bind(this);
     this.validationErrors = this.validationErrors.bind(this);
     this.clearValidationErrors = this.clearValidationErrors.bind(this);
@@ -81,6 +84,15 @@ export class EditSettingsView {
       $('#openassessment_leaderboard_editor', this.element),
       { min: 0, max: 100 },
     );
+
+    this.retryAssessmentMinsIntField = new IntField(
+      $('#openassessment_retry_minutes', this.element),
+      { min: 0, max: 59 },
+    );
+    this.retryAssessmentHoursIntField = new IntField(
+      $('#openassessment_retry_hours', this.element),
+      { min: 0 },
+    );    
 
     this.fileTypeWhiteListInputField = new InputControl(
       $('#openassessment_submission_white_listed_file_types', this.element),
@@ -430,6 +442,20 @@ export class EditSettingsView {
     }
     return this.leaderboardIntField.get(num);
   }
+
+  retryAssessmentMinsNum(num) {
+    if (num !== undefined) {
+      this.retryAssessmentMinsIntField.set(num);
+    }
+    return this.retryAssessmentMinsIntField.get(num);
+  }
+  retryAssessmentHoursNum(num) {
+    if (num !== undefined) {
+      this.retryAssessmentHoursIntField.set(num);
+    }
+    return this.retryAssessmentHoursIntField.get(num);
+  }
+
 
   /**
     Enable / disable showing learners the assessment rubric while working on their response.

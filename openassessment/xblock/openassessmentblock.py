@@ -12,6 +12,7 @@ import pytz
 
 from django.conf import settings
 from django.template.loader import get_template
+from django.contrib.auth import get_user_model
 
 from bleach.sanitizer import Cleaner
 from lazy import lazy
@@ -65,6 +66,7 @@ from openassessment.xblock.apis.assessments.self_assessment_api import SelfAsses
 from openassessment.xblock.apis.assessments.staff_assessment_api import StaffAssessmentAPI
 from openassessment.xblock.apis.assessments.student_training_api import StudentTrainingAPI
 from openassessment.xblock.apis.ora_data_accessor import ORADataAccessor
+from lms.djangoapps.instructor.enrollment import reset_student_attempts
 
 logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
@@ -162,6 +164,18 @@ class OpenAssessmentBlock(
         default=0,
         scope=Scope.content,
         help="The number of leaderboard results to display (0 if none)"
+    )
+
+    openassessment_retry_minutes = Integer(
+        default=0,
+        scope=Scope.content,
+        help="The number of minutes to retry the submission"
+    )
+
+    openassessment_retry_hours= Integer(
+        default=0,
+        scope=Scope.content,
+        help="The number of hours to retry the submission"
     )
 
     no_peers = Boolean(
@@ -811,6 +825,8 @@ class OpenAssessmentBlock(
         block.file_upload_type = config['file_upload_type']
         block.group_access = config['group_access']
         block.leaderboard_show = config['leaderboard_show']
+        block.openassessment_retry_minutes = config['openassessment_retry_minutes']
+        block.openassessment_retry_hours = config['openassessment_retry_hours']
         block.prompts = config['prompts']
         block.prompts_type = config['prompts_type']
         block.rubric_criteria = config['rubric_criteria']
@@ -1235,6 +1251,20 @@ class OpenAssessmentBlock(
         self.runtime.publish(self, event_name, data)
         return {'success': True}
 
+    @XBlock.json_handler
+    def reset_student_assessment(self, data, suffix=''):  # pylint: disable=unused-argument
+        """
+        Reset the assessment attempts for a given student.
+        Args:
+            data (dict): Contains the student information, e.g. { "user_id": "12345" }
+            suffix (str, optional): Unused parameter. Defaults to ''.
+        Returns:
+            dict: A dictionary indicating the success status, e.g. { 'success': True }
+        """
+        user = get_user_model().objects.get(id= data["user_id"])
+        reset_student_attempts(self.course_id, user, self.location, user, True)
+        return {'success': True}
+    
     def get_real_user(self, anonymous_user_id):
         """
         Return the user associated with anonymous_user_id
