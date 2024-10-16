@@ -14,6 +14,7 @@ from xblock.fields import List, Scope
 
 from django.template.loader import get_template
 from django.utils.translation import gettext_lazy
+from django.conf import settings
 
 from openassessment.xblock.utils.data_conversion import (
     create_rubric_dict,
@@ -173,6 +174,17 @@ class StudioMixin:
             rubric_reuse_data = self.get_other_ora_blocks_for_rubric_editor_context()
 
         course_settings = self.get_course_workflow_settings()
+
+        if self.course.end is not None:
+            # SET_DEFAULT_DATE_CONFIG_TYPE value is:
+            # 'manual': Configure deadlines manually,
+            # 'subsection': Match deadlines to the subsection due date
+            # 'course_end': Match deadlines to the course end date
+            # 
+            # To use SET_DEFAULT_DATE_CONFIG_TYPE value in global setting, 
+            # you must set this value using Tutor plugins in 'openedx-common-settings'
+            # (ora2 component will be error if you do not set).
+            self.date_config_type = settings.SET_DEFAULT_DATE_CONFIG_TYPE
 
         return {
             'prompts': self.prompts,
